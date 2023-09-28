@@ -9,17 +9,21 @@ var lowerCase = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p'
 var upperCase = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 var specialChar =[' ','!','"','#','$','%','&',"'",'(',')','*','+',',','-','.','/',':',';','<','=','>','?','@','[','\'',']','^','_','`','{','|','}','~'];
 
-var lengthChoice = ""
-var numbersChoice = ""
-var uppercaseChoice = ""
-var lowercaseChoice = ""
+var userData = [];
+var tempPW = [];
+
+var lengthChoice = "";
+var numbersChoice = "";
+var uppercaseChoice = "";
+var lowercaseChoice = "";
 
 function RNG (num) {
-  var index = Math.floor(Math.random() * num.length)
-  var randomItem = num[index]
-  console.log('Random Character: ', randomItem)
+  var index = Math.floor(Math.random() * num.length);
+  var randomItem = num[index];
+  console.log('Random Character: ', randomItem);
   return randomItem;
 }
+
 RNG(numbers[RNG(numbers)]);
 RNG(lowerCase);
 RNG(upperCase);
@@ -48,6 +52,8 @@ function numConfirm(){
   numbersChoice = confirm('would you like numbers to be included in your password?');
   if (numbersChoice === true){
     alert('Your password will include numbers.');
+    userData = userData.concat(numbers);
+    console.log(userData);
     uppercaseConfirm();
     return numbersChoice;
   }
@@ -62,6 +68,7 @@ function uppercaseConfirm(){
   uppercaseChoice = confirm('would you like uppercase letters to be included in your password?');
   if (uppercaseChoice === true){
     alert('Your password will include uppercase letters.');
+    userData = userData.concat(upperCase)
     lowercaseConfirm();
     return uppercaseChoice;
   }
@@ -74,27 +81,65 @@ function uppercaseConfirm(){
 function lowercaseConfirm(){
   lowercaseChoice = confirm('would you like lowercase letters to be included in your password?');
   if (lowercaseChoice === true){
+    userData = userData.concat(lowerCase);
     alert('Your password will include lowercase letters.');
+    specialCharConfirm();
     return lowercaseChoice;
   }
   else{
     alert('Your password will not include lowercase letters.');
+    specialCharConfirm();
     return lowercaseChoice;
   }
 }
+function specialCharConfirm(){
+  specialCharChoice = confirm('would you like special character to be included in your password?');
+  if(specialCharChoice === true){
+    userData = userData.concat(specialChar);
+    alert('Your password will include special characters.')
+    return specialCharChoice;
+  }
+  else{
+    alert('Your password will not include special characters.');
+    return specialCharChoice;
+  }
 }
+}
+
+
+  
+  // function generatePassword() {
+  //   var userSelected = []
+  //   var finalPW = []
+  //   for (var i = 0; i < pwLength; i++) {
+  //     var newCharacter = RNG(userSelected)
+  //     finalPW.push(newCharacter)
+      
+  //   }
+  
+  //   return finalPW.join('');
+
+  function generatePassword(){
+
+    characterAmt(lengthChoice);
+
+    for (let i = 0; i < lengthChoice; i++) {
+      tempPW.push(RNG(userData))
+    }
+    console.log(tempPW);
+    return tempPW.join('');
+  }
+
 // Write password to the #password input
 function writePassword() {
 
+  var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
-  characterAmt(lengthChoice);
-
-  var userData =[lengthChoice,numbersChoice,uppercaseChoice,lowercaseChoice];
-
+  
+  
 }
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
+console.log(document)
