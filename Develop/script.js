@@ -8,6 +8,7 @@ var numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 var lowerCase = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 var upperCase = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 var specialChar =[' ','!','"','#','$','%','&',"'",'(',')','*','+',',','-','.','/',':',';','<','=','>','?','@','[','\'',']','^','_','`','{','|','}','~'];
+
 var lengthChoice = ""
 var numbersChoice = ""
 var uppercaseChoice = ""
@@ -24,48 +25,53 @@ RNG(lowerCase);
 RNG(upperCase);
 RNG(specialChar);
 // method .concat() to combine arrays into one
-// Write password to the #password input
-function writePassword() {
 
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-
+function characterAmt(){
   lengthChoice = prompt('how long would you like your password to be? (between 8-128 characters)');
-  if (lengthChoice <= 8){
-    alert('please try a different value');
-    writePassword;
-    return;
-  }
-  else if (lengthChoice >=128){
-    alert('please try a different value');
-    writePassword;
-    return;
-  }
-  else{
-    alert('You have chosen ' + lengthChoice + ' characters.');
-    return lengthChoice;
-  };
-  
+if (lengthChoice <= 8){
+  alert('please try a different value');
+  writePassword;
+  return;
+}
+else if (lengthChoice >=128){
+  alert('please try a different value');
+  writePassword;
+  return;
+}
+else{
+  alert('You have chosen ' + lengthChoice + ' characters.');
+  numConfirm();
+  return lengthChoice;
+}
+
+function numConfirm(){
   numbersChoice = confirm('would you like numbers to be included in your password?');
   if (numbersChoice === true){
     alert('Your password will include numbers.');
+    uppercaseConfirm();
     return numbersChoice;
   }
   else{
     alert('Your password will not include numbers.');
+    uppercaseConfirm();
     return numbersChoice;
   }
+}
 
+function uppercaseConfirm(){
   uppercaseChoice = confirm('would you like uppercase letters to be included in your password?');
   if (uppercaseChoice === true){
     alert('Your password will include uppercase letters.');
+    lowercaseConfirm();
     return uppercaseChoice;
   }
   else{
     alert('Your password will not include uppercase letters.');
+    lowercaseConfirm();
     return uppercaseChoice;
   }
+}
+function lowercaseConfirm(){
   lowercaseChoice = confirm('would you like lowercase letters to be included in your password?');
   if (lowercaseChoice === true){
     alert('Your password will include lowercase letters.');
@@ -75,6 +81,18 @@ function writePassword() {
     alert('Your password will not include lowercase letters.');
     return lowercaseChoice;
   }
+}
+}
+// Write password to the #password input
+function writePassword() {
+
+  var passwordText = document.querySelector("#password");
+
+  passwordText.value = password;
+
+  characterAmt(lengthChoice);
+
+  var userData =[lengthChoice,numbersChoice,uppercaseChoice,lowercaseChoice];
 
 }
 // Add event listener to generate button
